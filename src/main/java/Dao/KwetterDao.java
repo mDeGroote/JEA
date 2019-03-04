@@ -15,11 +15,8 @@ import java.util.List;
  * Interface for persistency of Kwetters
  */
 public interface KwetterDao {
-    public void Create(Kwetter k);
+    public Kwetter Create(Kwetter k);
     public void Delete(Kwetter k);
     public Kwetter KwetterByID(int id);
-    public List<Kwetter> AllKwettersFromUser(KwetterUser u);
-    public List<Kwetter> Last10Kwetters(int id);
-    public List<Kwetter> GetTimeline(KwetterUser u);
     public List<Kwetter> Search(String s);
 }

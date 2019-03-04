@@ -29,7 +29,7 @@ import services.KwetterUserService;
  * Resource for the users
  */
 @Stateless
-@Path("UserResource")
+@Path("users")
 public class KwetterUserResource {
     @Inject
     KwetterUserService kwetterUserService;
@@ -41,16 +41,16 @@ public class KwetterUserResource {
     @Path("create")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(KwetterUser u) {
-        kwetterUserService.Create(u);
-        return Response.ok().build();
+        u = kwetterUserService.Create(u);
+        return Response.ok(u).build();
     }
     
     @POST
     @Path("update")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(KwetterUser u) {
-        kwetterUserService.Update(u);
-        return Response.ok().build();
+        u = kwetterUserService.Update(u);
+        return Response.ok(u).build();
     }
     
     @GET

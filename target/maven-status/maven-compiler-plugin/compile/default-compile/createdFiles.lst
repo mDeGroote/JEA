@@ -1,7 +1,6 @@
 Dao\UserDaoColl.class
 Dao\UserDaoImpl.class
 Resources\KwetterUserResource.class
-DateSerializers\DateSerializer.class
 org\netbeans\rest\application\config\ApplicationConfig.class
 Models\Kwetter.class
 Dao\KwetterDaoColl.class
@@ -9,10 +8,9 @@ Models\KwetterUser_.class
 Resources\KwetterResource.class
 com\mycompany\kwetter\DukesAgeResource.class
 services\KwetterService.class
+Models\Roles.class
 services\KwetterUserService.class
 Dao\JPA.class
-Models\UserType.class
-DateSerializers\DateDeserializer.class
 Models\account_.class
 Dao\UserDao.class
 Models\KwetterUser.class

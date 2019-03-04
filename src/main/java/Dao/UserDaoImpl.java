@@ -27,13 +27,14 @@ public class UserDaoImpl implements UserDao{
     }
     
     @Override
-    public void Create(KwetterUser u) {
+    public KwetterUser Create(KwetterUser u) {
         em.persist(u);
+        return u;
     }
     
     @Override
-    public void Update(KwetterUser u) {
-        em.merge(u);
+    public KwetterUser Update(KwetterUser u) {
+        return em.merge(u);
     }
     
     @Override

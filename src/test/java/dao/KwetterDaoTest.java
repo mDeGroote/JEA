@@ -46,11 +46,12 @@ public class KwetterDaoTest {
     public void testCreate() throws Exception {
         KwetterUser kwetterUser = new KwetterUser();
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
+        kwetterUser.addKwetter(kwetter);
         et.begin();
         em.persist(kwetterUser);
-        kwetterDao.Create(kwetter);
+        kwetter = kwetterDao.Create(kwetter);
         et.commit();    
-        assertEquals(em.find(Kwetter.class, kwetter.getId()), kwetter);
+        assertTrue(kwetter.getId() > 0);
     }
 
     /**
@@ -79,59 +80,12 @@ public class KwetterDaoTest {
     }
 
     /**
-     * Test of AllKwettersFromUser method, of class KwetterDaoImpl.
-     */
-    @Test
-    public void testAllKwettersFromUser() throws Exception {
-        KwetterUser kwetterUser = new KwetterUser();
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        et.begin();
-        em.persist(kwetterUser);
-        em.persist(kwetter);
-        et.commit();
-        List<Kwetter> kwetters = kwetterDao.AllKwettersFromUser(kwetterUser);
-        assertEquals(kwetter, kwetters.get(0));
-    }
-
-    /**
-     * Test of Last10Kwetters method, of class KwetterDaoImpl.
-     */
-    @Test
-    public void testLast10Kwetters() throws Exception {
-        KwetterUser kwetterUser = new KwetterUser();
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        et.begin();
-        em.persist(kwetterUser);
-        em.persist(kwetter);
-        et.commit();
-        List<Kwetter> kwetters = kwetterDao.Last10Kwetters(kwetterUser.getId());
-        assertEquals(kwetter, kwetters.get(0));
-    }
-
-    /**
-     * Test of GetTimeline method, of class KwetterDaoImpl.
-     */
-    @Test
-    public void testGetTimeline() throws Exception {
-        KwetterUser kwetterUser = new KwetterUser();
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        et.begin();
-        em.persist(kwetterUser);
-        em.persist(kwetter);
-        et.commit();
-        List<Kwetter> kwetters = kwetterDao.GetTimeline(kwetterUser);
-        assertEquals(kwetter, kwetters.get(0));
-    }
-
-    /**
      * Test of Search method, of class KwetterDaoImpl.
      */
     @Test
     public void testSearch() throws Exception {
-        KwetterUser kwetterUser = new KwetterUser();
-        Kwetter kwetter = new Kwetter("title", "stukje tekst om te kijken of de search functie wel het woord goed kan vinden", kwetterUser);
+        Kwetter kwetter = new Kwetter("title", "stukje tekst om te kijken of de search functie wel het woord goed kan vinden", null);
         et.begin();
-        em.persist(kwetterUser);
         em.persist(kwetter);
         et.commit();
         List<Kwetter> kwetters = kwetterDao.Search("search");

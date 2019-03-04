@@ -28,7 +28,7 @@ import services.KwetterService;
  * Resource for the kwetters
  */
 @Stateless
-@Path("KwetterResource")
+@Path("kwetters")
 public class KwetterResource {
     @Inject
     KwetterService kwetterService;
@@ -39,12 +39,12 @@ public class KwetterResource {
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(Kwetter k) {
-        kwetterService.Create(k);
-        return Response.ok().build();
+        k = kwetterService.Create(k);
+        return Response.ok(k).build();
     }
     
     @DELETE
-    @Path("/{id}")
+    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") int id) {
         kwetterService.Delete(kwetterService.kwetterByID(id));
@@ -57,39 +57,6 @@ public class KwetterResource {
         Kwetter kwetter = kwetterService.kwetterByID(id);
         if(kwetter != null) {
             return Response.ok(kwetter).build();
-        }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
-    }
-    
-    @GET
-    @Path("/timeline")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response timeline(KwetterUser u) {
-        List<Kwetter> kwetters = kwetterService.getTimeline(u);
-        if(kwetters != null) {
-            return Response.ok(kwetters).build();
-        }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
-    }
-    
-    @GET
-    @Path("/all")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getAllKwettersFromUser(KwetterUser u) {
-        List<Kwetter> kwetters = kwetterService.getTimeline(u);
-        if(kwetters != null) {
-            return Response.ok(kwetters).build();
-        }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
-    }
-    
-    @GET
-    @Path("/last10/{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getLast10Kwetters(@PathParam("id") int id) {
-        List<Kwetter> kwetters = kwetterService.last10Kwetters(id);
-        if(kwetters != null) {
-            return Response.ok(kwetters).build();
         }
         throw new WebApplicationException(Response.Status.NO_CONTENT);
     }

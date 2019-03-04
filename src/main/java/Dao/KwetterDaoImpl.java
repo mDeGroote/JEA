@@ -33,8 +33,10 @@ public class KwetterDaoImpl implements KwetterDao{
     }
       
     @Override
-    public void Create(Kwetter k) {
+    public Kwetter Create(Kwetter k) {
+        k.setUser(em.merge(k.getUser()));
         em.persist(k);
+        return k;
     }
 
     @Override
@@ -45,30 +47,6 @@ public class KwetterDaoImpl implements KwetterDao{
     @Override
     public Kwetter KwetterByID(int id) {
         return em.find(Kwetter.class, id);
-    }
-
-    @Override
-    public List<Kwetter> AllKwettersFromUser(KwetterUser u) {
-        Query query = em.createQuery("SELECT k FROM Kwetter k WHERE k.user = ?1");
-        query.setParameter(1, u);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Kwetter> Last10Kwetters(int id) {
-        Query query = em.createNativeQuery("SELECT * FROM Kwetter WHERE user_id = ?1 ORDER BY id DESC LIMIT 10", Kwetter.class);
-        query.setParameter(1, id);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Kwetter> GetTimeline(KwetterUser u) {
-        List<Kwetter> kwetters = AllKwettersFromUser(u);
-        for(KwetterUser ku : u.getFollowing()) {
-            kwetters.addAll(AllKwettersFromUser(ku));
-        }
-        kwetters.sort(null);
-        return kwetters;
     }
 
     @Override

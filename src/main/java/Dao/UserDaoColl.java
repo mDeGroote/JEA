@@ -7,6 +7,7 @@ package Dao;
 
 import Models.KwetterUser;
 import Models.account;
+import com.sun.org.apache.regexp.internal.REUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,8 +19,9 @@ public class UserDaoColl implements UserDao{
     private List<KwetterUser> users = new ArrayList<>();
 
     @Override
-    public void Create(KwetterUser u) {
+    public KwetterUser Create(KwetterUser u) {
         users.add(u);
+        return u;
     }
 
     @Override
@@ -58,12 +60,13 @@ public class UserDaoColl implements UserDao{
     }
 
     @Override
-    public void Update(KwetterUser u) {
+    public KwetterUser Update(KwetterUser u) {
         for(KwetterUser user : users) {
             if(u.getId() == user.getId()) {
                 user = u;
             }
         }
+        return u;
     } 
     
 }

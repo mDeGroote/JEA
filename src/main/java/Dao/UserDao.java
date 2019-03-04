@@ -13,8 +13,8 @@ import java.util.List;
  * Interface for persistency of Users
  */
 public interface UserDao {
-    public void Create(KwetterUser u);
-    public void Update(KwetterUser u);
+    public KwetterUser Create(KwetterUser u);
+    public KwetterUser Update(KwetterUser u);
     public void DeleteUser(KwetterUser u);
     public void DeleteAccount(account account);
     public KwetterUser UserByID(int id);

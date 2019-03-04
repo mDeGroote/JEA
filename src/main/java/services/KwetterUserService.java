@@ -28,12 +28,12 @@ public class KwetterUserService {
     private UserDao userDao;
     
     
-    public void Create(KwetterUser u) {
-        userDao.Create(u);
+    public KwetterUser Create(KwetterUser u) {
+        return userDao.Create(u);
     }
     
-    public void Update(KwetterUser u) {
-        userDao.Update(u);
+    public KwetterUser Update(KwetterUser u) {
+        return userDao.Update(u);
     }
     
     public void DeleteAccount(account a) {

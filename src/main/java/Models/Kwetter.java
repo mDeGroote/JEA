@@ -75,6 +75,6 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
 
     @Override
     public int compareTo(Kwetter o) {
-        return this.kwetterDate.compareTo(o.getKwetterDate());
+        return LocalDate.parse(this.kwetterDate).compareTo(LocalDate.parse(o.getKwetterDate()));
     }
 }

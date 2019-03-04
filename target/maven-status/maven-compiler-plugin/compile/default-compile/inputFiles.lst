@@ -7,13 +7,11 @@ C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Models\K
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\KwetterDaoImpl.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\UserDao.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\UserDaoColl.java
-C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\DateSerializers\DateDeserializer.java
-C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Models\UserType.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\services\KwetterUserService.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\KwetterDao.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Resources\KwetterUserResource.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Models\account.java
-C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\DateSerializers\DateSerializer.java
+C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Models\Roles.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\org\netbeans\rest\application\config\ApplicationConfig.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Resources\KwetterResource.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\services\KwetterService.java

@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.junit.After;
 
 public class KwetterRestTest {
-    KwetterUser kwetterUser = new KwetterUser("name", null, null, null, "bio", "website", "locatie");
+    KwetterUser kwetterUser = new KwetterUser("name", null, null, null, "bio", "website", "locatie", null);
     List<Kwetter> kwettersToDelete = new ArrayList();
 
     public KwetterRestTest() {
@@ -24,17 +24,15 @@ public class KwetterRestTest {
 
     @Before
     public void setUp() {
-        given()
+        kwetterUser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetterUser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/UserResource/create");
-        KwetterUser[] users = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get("http://localhost:8080/Kwetter/webapi/UserResource")
-                .as(KwetterUser[].class);
-        kwetterUser = users[users.length - 1];
+                .post("http://localhost:8080/Kwetter/webapi/users/create")
+                .then()
+                .extract()
+                .body()
+                .as(KwetterUser.class); 
     }
 
     @Test
@@ -44,7 +42,7 @@ public class KwetterRestTest {
                 .contentType(ContentType.JSON)
                 .body(kwetter)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/KwetterResource")
+                .post("http://localhost:8080/Kwetter/webapi/kwetters")
                 .then()
                 .statusCode(200);
         kwettersToDelete.add(kwetter);
@@ -53,69 +51,19 @@ public class KwetterRestTest {
     @Test
     public void testKwetterByID() {
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        given()
+        kwetter = given()
                 .contentType(ContentType.JSON)
                 .body(kwetter)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/KwetterResource");
-        kwettersToDelete.add(kwetter);
-        given()
-                .when()
-                .get("http://localhost:8080/Kwetter/webapi/KwetterResource/" + kwetter.getId())
+                .post("http://localhost:8080/Kwetter/webapi/kwetters")
                 .then()
-                .statusCode(200);
-    }
-
-    @Test
-    public void testTimeline() {
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        given()
-                .contentType(ContentType.JSON)
-                .body(kwetter)
-                .when()
-                .post("http://localhost:8080/Kwetter/webapi/KwetterResource");
+                .extract()
+                .body()
+                .as(Kwetter.class);
         kwettersToDelete.add(kwetter);
         given()
-                .contentType(ContentType.JSON)
-                .body(kwetterUser)
                 .when()
-                .get("http://localhost:8080/Kwetter/webapi/KwetterResource/timeline")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
-    public void testGetAllKwettersFromUser() {
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        given()
-                .contentType(ContentType.JSON)
-                .body(kwetter)
-                .when()
-                .post("http://localhost:8080/Kwetter/webapi/KwetterResource");
-        kwettersToDelete.add(kwetter);
-        given()
-                .contentType(ContentType.JSON)
-                .body(kwetterUser)
-                .when()
-                .get("http://localhost:8080/Kwetter/webapi/KwetterResource/all")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
-    public void testGetLast10Kwetters() {
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        given()
-                .contentType(ContentType.JSON)
-                .body(kwetter)
-                .when()
-                .post("http://localhost:8080/Kwetter/webapi/KwetterResource");
-        kwettersToDelete.add(kwetter);
-        given()
-                .contentType(ContentType.JSON)
-                .body(kwetterUser)
-                .when()
-                .get("http://localhost:8080/Kwetter/webapi/KwetterResource/last10/" + kwetterUser.getId())
+                .get("http://localhost:8080/Kwetter/webapi/kwetters/" + kwetter.getId())
                 .then()
                 .statusCode(200);
     }
@@ -124,7 +72,7 @@ public class KwetterRestTest {
     public void testSearch() {
         given()
                 .when()
-                .get("http://localhost:8080/Kwetter/webapi/KwetterResource/search/title")
+                .get("http://localhost:8080/Kwetter/webapi/kwetters/search/title")
                 .then()
                 .statusCode(200);
     }
@@ -132,15 +80,19 @@ public class KwetterRestTest {
     @Test
     public void testDelete() {
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        given()
+        kwetter = given()
                 .contentType(ContentType.JSON)
                 .body(kwetter)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/KwetterResource");
+                .post("http://localhost:8080/Kwetter/webapi/kwetters")
+                .then()
+                .extract()
+                .body()
+                .as(Kwetter.class);
         kwettersToDelete.add(kwetter);
         given()
                 .when()
-                .delete("http://localhost:8080/Kwetter/webapi/KwetterResource/" + kwetter.getId())
+                .delete("http://localhost:8080/Kwetter/webapi/kwetters/" + kwetter.getId())
                 .then()
                 .statusCode(200);
     }
@@ -149,11 +101,11 @@ public class KwetterRestTest {
     public void deleteTestItems() {
         given()
                 .when()
-                .delete("http://localhost:8080/Kwetter/webapi/UserResource/" + kwetterUser.getId());
+                .delete("http://localhost:8080/Kwetter/webapi/users/" + kwetterUser.getId());
         for(Kwetter k : kwettersToDelete) {
             given()
                 .when()
-                .delete("http://localhost:8080/Kwetter/webapi/KwetterResource/" + k.getId());
+                .delete("http://localhost:8080/Kwetter/webapi/kwetters/" + k.getId());
         }
     }
 }

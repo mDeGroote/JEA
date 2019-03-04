@@ -26,8 +26,8 @@ public class KwetterService{
     @Inject @JPA
     private KwetterDao kwetterDao;
     
-    public void Create(Kwetter k) {
-        kwetterDao.Create(k);
+    public Kwetter Create(Kwetter k) {
+        return kwetterDao.Create(k);
     }
     
     public void Delete(Kwetter k) {
@@ -36,18 +36,6 @@ public class KwetterService{
     
     public Kwetter kwetterByID(int id) {
         return kwetterDao.KwetterByID(id);
-    }
-    
-    public List<Kwetter> AllKwettersFromUser(KwetterUser u) {
-        return kwetterDao.AllKwettersFromUser(u);
-    }
-    
-    public List<Kwetter> getTimeline(KwetterUser u) {
-        return kwetterDao.GetTimeline(u);
-    }
-    
-    public List<Kwetter> last10Kwetters(int id) {
-        return kwetterDao.Last10Kwetters(id);
     }
     
     public List<Kwetter> search(String s) {

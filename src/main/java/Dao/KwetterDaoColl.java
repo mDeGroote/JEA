@@ -23,8 +23,9 @@ public class KwetterDaoColl implements KwetterDao{
     private List<Kwetter> kwetters = new ArrayList<>();
 
     @Override
-    public void Create(Kwetter k) {
+    public Kwetter Create(Kwetter k) {
         kwetters.add(k);
+        return k;
     }
 
     @Override
@@ -40,45 +41,6 @@ public class KwetterDaoColl implements KwetterDao{
             }
         }
         return null;
-    }
-
-    @Override
-    public List<Kwetter> AllKwettersFromUser(KwetterUser u) {
-        List<Kwetter> kwettersFromUser = new ArrayList();
-        for(Kwetter kwetter: kwetters) {
-            if(kwetter.getUser().getId() == u.getId()) {
-                kwettersFromUser.add(kwetter);
-            }
-        }
-        return kwettersFromUser;
-    }
-
-    @Override
-    public List<Kwetter> Last10Kwetters(int id) {
-        List<Kwetter> kwettersFromUser = new ArrayList();
-        for(Kwetter kwetter: kwetters) {
-            if(kwetter.getUser().getId() == id) {
-                kwettersFromUser.add(kwetter);
-                if(kwettersFromUser.size() == 10) {
-                    break;
-                }
-            }
-        }
-        return kwettersFromUser;
-    }
-
-    @Override
-    public List<Kwetter> GetTimeline(KwetterUser u) {
-        List<Kwetter> timeline = new ArrayList();
-        kwetters.stream().filter(kwetter -> kwetter.getUser().getId() == u.getId()).iterator().forEachRemaining((t) -> {
-            timeline.add(t);
-        });
-        for(KwetterUser user: u.getFollowing()) {
-            kwetters.stream().filter(kwetter -> kwetter.getUser().getId() == user.getId()).iterator().forEachRemaining((t) -> {
-            timeline.add(t);
-            }); 
-        }
-        return timeline;
     }
 
     @Override

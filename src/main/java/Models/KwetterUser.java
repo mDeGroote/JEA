@@ -6,6 +6,7 @@
 package Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -25,19 +27,19 @@ public class KwetterUser implements Serializable {
     private String name;
     private byte[] profilePicture;
     @ManyToMany
-    @ElementCollection
-    private List<KwetterUser> followers;
+    private List<KwetterUser> followers = new ArrayList();
     @ManyToMany
-    @ElementCollection
-    private List<KwetterUser> following;
+    private List<KwetterUser> following = new ArrayList();
     private String bio;
     private String website;
     private String locatie;
+    @OneToMany(mappedBy = "user")
+    private List<Kwetter> kwetters = new ArrayList();
 
     public KwetterUser() {
     }
 
-    public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String locatie) {
+    public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String locatie, List<Kwetter> kwetters) {
         this.name = name;
         this.profilePicture = profilePicture;
         this.followers = followers;
@@ -45,6 +47,7 @@ public class KwetterUser implements Serializable {
         this.bio = bio;
         this.website = website;
         this.locatie = locatie;
+        this.kwetters = kwetters;
     }
 
     public int getId() {
@@ -106,7 +109,38 @@ public class KwetterUser implements Serializable {
     public void setFollowing(List<KwetterUser> following) {
         this.following = following;
     }
+
+    public List<Kwetter> getKwetters() {
+        return kwetters;
+    }
+
+    public void setKwetters(List<Kwetter> kwetters) {
+        this.kwetters = kwetters;
+    }
     
+    public void addKwetter(Kwetter k) {
+        this.kwetters.add(k);
+    }
     
+    public void removeKwetter(Kwetter k) {
+        this.kwetters.remove(k);
+    }
     
+    public void follow(KwetterUser u) {
+        this.following.add(u);
+    }
+    
+    public void unfollow(KwetterUser u) {
+        this.followers.remove(u);
+    }
+    
+    public List<Kwetter> timeline() {
+        List<Kwetter> timeline = this.kwetters;
+        timeline.sort(null);
+        for(KwetterUser u : this.following) {
+            timeline.addAll(u.getKwetters());
+            timeline.sort(null);
+        }
+        return timeline;
+    }
 }
