@@ -46,11 +46,9 @@ public class KwetterDaoTest {
     public void testCreate() throws Exception {
         KwetterUser kwetterUser = new KwetterUser();
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
-        kwetterUser.addKwetter(kwetter);
         et.begin();
-        em.persist(kwetterUser);
         kwetter = kwetterDao.Create(kwetter);
-        et.commit();    
+        et.commit();
         assertTrue(kwetter.getId() > 0);
     }
 
@@ -59,9 +57,11 @@ public class KwetterDaoTest {
      */
     @Test
     public void testDelete() throws Exception {
+        KwetterUser kwetterUser = new KwetterUser();
         Kwetter kwetter = new Kwetter();
+        kwetter.setUser(kwetterUser);
         et.begin();
-        em.persist(kwetter);
+        kwetter = kwetterDao.Create(kwetter);
         et.commit();
         em.remove(kwetter);
         assertNull(em.find(Kwetter.class, kwetter.getId()));

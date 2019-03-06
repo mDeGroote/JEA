@@ -47,8 +47,12 @@ public class KwetterResource {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") int id) {
-        kwetterService.Delete(kwetterService.kwetterByID(id));
-        return Response.ok().build();
+        Kwetter kwetter = kwetterService.kwetterByID(id);
+        if(kwetter != null) {
+            kwetterService.Delete(kwetter);
+            return Response.ok().build();
+        }
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
     
     @GET
@@ -58,7 +62,7 @@ public class KwetterResource {
         if(kwetter != null) {
             return Response.ok(kwetter).build();
         }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
        
     @GET

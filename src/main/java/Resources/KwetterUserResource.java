@@ -42,7 +42,7 @@ public class KwetterUserResource {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(KwetterUser u) {
         u = kwetterUserService.Create(u);
-        return Response.ok(u).build();
+        return Response.ok(u).status(Response.Status.CREATED).build();
     }
     
     @POST
@@ -60,7 +60,7 @@ public class KwetterUserResource {
         if(users != null) {
             return Response.ok(users).build();
         }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
     
     @GET
@@ -71,7 +71,7 @@ public class KwetterUserResource {
         if(kwetterUser != null) {
           return Response.ok(kwetterUser).build();  
         }
-        throw new WebApplicationException(Response.Status.NOT_FOUND);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
     
     @DELETE
@@ -104,6 +104,6 @@ public class KwetterUserResource {
         if(user != null) {
             return Response.ok(user).build();
         }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

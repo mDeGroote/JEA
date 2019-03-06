@@ -82,6 +82,12 @@ public class KwetterUser implements Serializable {
         return locatie;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
+
     public void setName(String name) {
         this.name = name;
     }

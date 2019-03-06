@@ -53,6 +53,12 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
         return user;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
+
     public void setTitle(String title) {
         this.title = title;
     }
