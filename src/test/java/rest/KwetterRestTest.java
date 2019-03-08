@@ -89,7 +89,6 @@ public class KwetterRestTest {
                 .extract()
                 .body()
                 .as(Kwetter.class);
-        kwettersToDelete.add(kwetter);
         given()
                 .when()
                 .delete("http://localhost:8080/Kwetter/webapi/kwetters/" + kwetter.getId())

@@ -39,7 +39,8 @@ public class KwetterUserResource {
     
     @POST
     @Path("create")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(KwetterUser u) {
         u = kwetterUserService.Create(u);
         return Response.ok(u).status(Response.Status.CREATED).build();
@@ -47,7 +48,8 @@ public class KwetterUserResource {
     
     @POST
     @Path("update")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response update(KwetterUser u) {
         u = kwetterUserService.Update(u);
         return Response.ok(u).build();
@@ -75,7 +77,7 @@ public class KwetterUserResource {
     }
     
     @DELETE
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteAccount(account account) {
         kwetterUserService.DeleteAccount(account);
         return Response.ok().build();       
@@ -99,6 +101,7 @@ public class KwetterUserResource {
     @POST
     @Path("Login")
     @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login(account account) {
         KwetterUser user = kwetterUserService.login(account.getUsername(), account.getPassword());
         if(user != null) {

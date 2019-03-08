@@ -37,15 +37,15 @@ public class KwetterResource {
     }
     
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(Kwetter k) {
         k = kwetterService.Create(k);
-        return Response.ok(k).build();
+        return Response.ok(k).status(Response.Status.CREATED).build();
     }
     
     @DELETE
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") int id) {
         Kwetter kwetter = kwetterService.kwetterByID(id);
         if(kwetter != null) {
@@ -57,6 +57,7 @@ public class KwetterResource {
     
     @GET
     @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response kwetterByID(@PathParam("id") int id) {
         Kwetter kwetter = kwetterService.kwetterByID(id);
         if(kwetter != null) {
@@ -67,6 +68,7 @@ public class KwetterResource {
        
     @GET
     @Path("/search/{searchTerm}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response search(@PathParam("searchTerm") String s) {
         List<Kwetter> kwetters = kwetterService.search(s);
         if(kwetters != null) {

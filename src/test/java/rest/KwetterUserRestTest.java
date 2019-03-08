@@ -31,7 +31,7 @@ public class KwetterUserRestTest {
                 .when()
                 .post("http://localhost:8080/Kwetter/webapi/users/create")
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .body()
                 .as(KwetterUser.class);       
@@ -48,7 +48,7 @@ public class KwetterUserRestTest {
                 .when()
                 .post("http://localhost:8080/Kwetter/webapi/users/create")
                 .then()
-                .statusCode(200); 
+                .statusCode(201); 
         kwetteruser.setName("updateTest");
          given()
                 .contentType(ContentType.JSON)
@@ -110,7 +110,7 @@ public class KwetterUserRestTest {
                 .when()
                 .post("http://localhost:8080/Kwetter/webapi/users/create")
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .body()
                 .as(KwetterUser.class); 

@@ -48,6 +48,7 @@ public class KwetterDaoTest {
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
         et.begin();
         kwetter = kwetterDao.Create(kwetter);
+        em.persist(kwetterUser);
         et.commit();
         assertTrue(kwetter.getId() > 0);
     }
