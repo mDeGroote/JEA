@@ -5,17 +5,32 @@
  */
 package rest;
 
+import Dao.KwetterDao;
+import Dao.KwetterDaoImpl;
 import Models.Kwetter;
 import Models.KwetterUser;
+import Resources.KwetterResource;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
+import org.jboss.weld.environment.se.Weld;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
+import org.junit.Assert;
+import services.KwetterService;
 
-public class KwetterRestTest {
+public class KwetterRestTest{
     KwetterUser kwetterUser = new KwetterUser("name", null, null, null, "bio", "website", "locatie", null);
     List<Kwetter> kwettersToDelete = new ArrayList();
 
@@ -28,7 +43,7 @@ public class KwetterRestTest {
                 .contentType(ContentType.JSON)
                 .body(kwetterUser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/users/create")
+                .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
                 .extract()
                 .body()

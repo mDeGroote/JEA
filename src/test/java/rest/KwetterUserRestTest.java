@@ -29,9 +29,9 @@ public class KwetterUserRestTest {
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/users/create")
+                .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
-                .statusCode(201)
+                .statusCode(200)
                 .extract()
                 .body()
                 .as(KwetterUser.class);       
@@ -42,19 +42,22 @@ public class KwetterUserRestTest {
     @Test
     public void testUpdate() {
         KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, null, null, "bio", "website", "locatie", null);
-        given()
+        kwetteruser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/users/create")
+                .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
-                .statusCode(201); 
+                .statusCode(200)
+                .extract()
+                .body()
+                .as(KwetterUser.class);
         kwetteruser.setName("updateTest");
-         given()
+        kwetteruser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/users/update")
+                .put("http://localhost:8080/Kwetter/webapi/users")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -81,7 +84,7 @@ public class KwetterUserRestTest {
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/users/create")
+                .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
                 .extract()
                 .body()
@@ -108,9 +111,9 @@ public class KwetterUserRestTest {
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
-                .post("http://localhost:8080/Kwetter/webapi/users/create")
+                .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
-                .statusCode(201)
+                .statusCode(200)
                 .extract()
                 .body()
                 .as(KwetterUser.class); 

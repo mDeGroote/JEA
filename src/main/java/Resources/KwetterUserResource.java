@@ -15,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -38,19 +39,20 @@ public class KwetterUserResource {
     }
     
     @POST
-    @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(KwetterUser u) {
         u = kwetterUserService.Create(u);
-        return Response.ok(u).status(Response.Status.CREATED).build();
+        return Response.ok(u).build();
     }
     
-    @POST
-    @Path("update")
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(KwetterUser u) {
+        if(u == null || u.getId() == 0) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
         u = kwetterUserService.Update(u);
         return Response.ok(u).build();
     }

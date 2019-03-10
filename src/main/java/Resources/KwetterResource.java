@@ -41,7 +41,7 @@ public class KwetterResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(Kwetter k) {
         k = kwetterService.Create(k);
-        return Response.ok(k).status(Response.Status.CREATED).build();
+        return Response.ok(k).build();
     }
     
     @DELETE
