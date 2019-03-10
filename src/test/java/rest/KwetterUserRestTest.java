@@ -24,7 +24,7 @@ public class KwetterUserRestTest {
     
     @Test
     public void testCreate() {
-        KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, null, null, "bio", "website", "locatie", null);
+        KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, null, new ArrayList<KwetterUser>(), "bio", "website", "locatie", null);
         kwetteruser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)

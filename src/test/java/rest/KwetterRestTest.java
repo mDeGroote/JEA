@@ -31,7 +31,7 @@ import org.junit.Assert;
 import services.KwetterService;
 
 public class KwetterRestTest{
-    KwetterUser kwetterUser = new KwetterUser("name", null, null, null, "bio", "website", "locatie", null);
+    KwetterUser kwetterUser = new KwetterUser("name", null, new ArrayList<>(), new ArrayList<>(), "bio", "website", "locatie", new ArrayList<>());
     List<Kwetter> kwettersToDelete = new ArrayList();
 
     public KwetterRestTest() {
@@ -53,6 +53,7 @@ public class KwetterRestTest{
     @Test
     public void testCreate() {
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
+        kwetterUser.addKwetter(kwetter);
         given()
                 .contentType(ContentType.JSON)
                 .body(kwetter)
@@ -66,6 +67,7 @@ public class KwetterRestTest{
     @Test
     public void testKwetterByID() {
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
+        kwetterUser.addKwetter(kwetter);
         kwetter = given()
                 .contentType(ContentType.JSON)
                 .body(kwetter)
@@ -95,6 +97,7 @@ public class KwetterRestTest{
     @Test
     public void testDelete() {
         Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
+        kwetterUser.addKwetter(kwetter);
         kwetter = given()
                 .contentType(ContentType.JSON)
                 .body(kwetter)

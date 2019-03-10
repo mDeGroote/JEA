@@ -5,6 +5,10 @@
  */
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,7 @@ public class KwetterUser implements Serializable {
     private String website;
     private String locatie;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Kwetter> kwetters = new ArrayList();
 
     public KwetterUser() {
@@ -132,10 +137,20 @@ public class KwetterUser implements Serializable {
     
     public void follow(KwetterUser u) {
         this.following.add(u);
+        u.addFollower(this);
     }
     
     public void unfollow(KwetterUser u) {
-        this.followers.remove(u);
+        this.following.remove(u);
+        u.removeFollower(this);
+    }
+    
+    public void addFollower(KwetterUser u) {
+        this.followers.add(u);
+    }
+    
+    public void removeFollower(KwetterUser u) {
+        this.followers.add(u);
     }
     
     public List<Kwetter> timeline() {
