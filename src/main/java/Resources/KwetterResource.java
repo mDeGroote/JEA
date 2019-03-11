@@ -74,6 +74,6 @@ public class KwetterResource {
         if(kwetters != null) {
             return Response.ok(kwetters).build();
         }
-        throw new WebApplicationException(Response.Status.NO_CONTENT);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

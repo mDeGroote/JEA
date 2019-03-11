@@ -43,7 +43,10 @@ public class KwetterUserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(KwetterUser u) {
         u = kwetterUserService.Create(u);
-        return Response.ok(u).build();
+        if(u != null) {
+            return Response.ok(u).build();
+        }
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
     
     @PUT
