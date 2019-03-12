@@ -11,6 +11,7 @@ import Models.KwetterUser;
 import Models.account;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import javax.ws.rs.Path;
  *
  * Service for the KwetterUser model
  */
-@ApplicationScoped
+@Stateless
 public class KwetterUserService {
     @Inject @JPA
     private UserDao userDao;
@@ -59,5 +60,15 @@ public class KwetterUserService {
     
     public KwetterUser login(String username, String password) {
         return userDao.Login(username, password);
+    }
+    
+    public KwetterUser follow(KwetterUser u, KwetterUser following) {
+        u.follow(following);
+        return userDao.Update(u);
+    }
+    
+    public KwetterUser unfollow(KwetterUser u, KwetterUser following) {
+        u.unfollow(following);
+        return userDao.Update(u);
     }
  }

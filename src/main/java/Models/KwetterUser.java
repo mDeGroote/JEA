@@ -5,13 +5,24 @@
  */
 package Models;
 
+import Serializers.CustomListDeserializer;
+import Serializers.CustomListSerializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,14 +36,16 @@ import javax.persistence.OneToMany;
  * Model for the users of the application
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class KwetterUser implements Serializable {
     @Id @GeneratedValue
     private int id;
     private String name;
     private byte[] profilePicture;
-    @ManyToMany
+    @ManyToMany  
     private List<KwetterUser> followers = new ArrayList();
     @ManyToMany
+    @JsonIgnore
     private List<KwetterUser> following = new ArrayList();
     private String bio;
     private String website;

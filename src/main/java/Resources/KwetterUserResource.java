@@ -7,8 +7,12 @@ package Resources;
 
 import Models.KwetterUser;
 import Models.account;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -44,7 +48,11 @@ public class KwetterUserResource {
     public Response create(KwetterUser u) {
         u = kwetterUserService.Create(u);
         if(u != null) {
-            return Response.ok(u).build();
+            try {
+                return Response.status(Response.Status.CREATED).entity(new ObjectMapper().writeValueAsString(u)).build();
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return Response.status(Response.Status.NO_CONTENT).build();
     }

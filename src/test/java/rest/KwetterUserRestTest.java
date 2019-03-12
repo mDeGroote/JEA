@@ -7,10 +7,14 @@ package rest;
 
 import Models.KwetterUser;
 import Models.account;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,31 +28,47 @@ public class KwetterUserRestTest {
     
     @Test
     public void testCreate() {
-        KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, null, new ArrayList<KwetterUser>(), "bio", "website", "locatie", null);
-        kwetteruser = given()
-                .contentType(ContentType.JSON)
-                .body(kwetteruser)
-                .when()
-                .post("http://localhost:8080/Kwetter/webapi/users")
-                .then()
-                .statusCode(200)
-                .extract()
-                .body()
-                .as(KwetterUser.class);       
-        Assert.assertEquals("UserRestTest", kwetteruser.getName());
-        usersToDelete.add(kwetteruser);
+        try {
+            KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, new ArrayList<KwetterUser>(), new ArrayList<>(), "bio", "website", "locatie", new ArrayList<>());
+            KwetterUser kwetteruser2 = new KwetterUser("user2", null, new ArrayList<KwetterUser>(), new ArrayList<KwetterUser>(), "bio", "website", "locatie", new ArrayList<>());      
+            kwetteruser = given()
+                    .contentType(ContentType.JSON)
+                    .body(new ObjectMapper().writeValueAsString(kwetteruser))
+                    .when()
+                    .post("http://localhost:8080/Kwetter/webapi/users")
+                    .then()
+                    .statusCode(201)
+                    .extract()
+                    .body() 
+                    .as(KwetterUser.class);
+            kwetteruser2.follow(kwetteruser);
+            kwetteruser2 = given()
+                        .contentType(ContentType.JSON)
+                        .body(new ObjectMapper().writeValueAsString(kwetteruser2))
+                        .when()
+                        .post("http://localhost:8080/Kwetter/webapi/users")
+                        .then()
+                        .statusCode(201)
+                        .extract()
+                        .body()
+                        .as(KwetterUser.class);
+            Assert.assertEquals("UserRestTest", kwetteruser.getName());
+            usersToDelete.add(kwetteruser);
+        } catch (JsonProcessingException ex) {
+            Logger.getLogger(KwetterUserRestTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Test
     public void testUpdate() {
-        KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, null, null, "bio", "website", "locatie", null);
+        KwetterUser kwetteruser = new KwetterUser("UserRestTest", null, new ArrayList<KwetterUser>(), new ArrayList<KwetterUser>(), "bio", "website", "locatie", new ArrayList<>());
         kwetteruser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
                 .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .body()
                 .as(KwetterUser.class);
@@ -79,7 +99,7 @@ public class KwetterUserRestTest {
     
     @Test
     public void testGetKwetterUser() {
-        KwetterUser kwetteruser = new KwetterUser("name", null, null, null, "bio", "website", "locatie", null);
+        KwetterUser kwetteruser = new KwetterUser("name", null, new ArrayList<KwetterUser>(), new ArrayList<KwetterUser>(), "bio", "website", "locatie", new ArrayList<>());
         kwetteruser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
@@ -106,14 +126,14 @@ public class KwetterUserRestTest {
     
     @Test
     public void testDelete() {
-        KwetterUser kwetteruser = new KwetterUser("name", null, null, null, "bio", "website", "locatie", null);
+        KwetterUser kwetteruser = new KwetterUser("name", null, new ArrayList<KwetterUser>(), new ArrayList<KwetterUser>(), "bio", "website", "locatie", new ArrayList<>());
         kwetteruser = given()
                 .contentType(ContentType.JSON)
                 .body(kwetteruser)
                 .when()
                 .post("http://localhost:8080/Kwetter/webapi/users")
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .body()
                 .as(KwetterUser.class); 

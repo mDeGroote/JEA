@@ -11,6 +11,7 @@ import Models.Kwetter;
 import Models.KwetterUser;
 import Models.account;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -21,7 +22,7 @@ import javax.ws.rs.Path;
  *
  * Service for the Kwetter model
  */
-@ApplicationScoped
+@Stateless
 public class KwetterService{
     @Inject @JPA
     private KwetterDao kwetterDao;

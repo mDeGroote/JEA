@@ -10,10 +10,14 @@ import Dao.KwetterDaoImpl;
 import Models.Kwetter;
 import Models.KwetterUser;
 import Resources.KwetterResource;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.http.ContentType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -31,7 +35,7 @@ import org.junit.Assert;
 import services.KwetterService;
 
 public class KwetterRestTest{
-    KwetterUser kwetterUser = new KwetterUser("name", null, new ArrayList<>(), new ArrayList<>(), "bio", "website", "locatie", new ArrayList<>());
+    KwetterUser kwetterUser = new KwetterUser("name", null, new ArrayList<KwetterUser>(), new ArrayList<>(), "bio", "website", "locatie", new ArrayList<Kwetter>());
     List<Kwetter> kwettersToDelete = new ArrayList();
 
     public KwetterRestTest() {
@@ -60,7 +64,7 @@ public class KwetterRestTest{
                 .when()
                 .post("http://localhost:8080/Kwetter/webapi/kwetters")
                 .then()
-                .statusCode(200);
+                .statusCode(201);
         kwettersToDelete.add(kwetter);
     }
 

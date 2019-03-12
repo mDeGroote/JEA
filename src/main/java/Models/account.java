@@ -5,6 +5,7 @@
  */
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,13 +24,13 @@ public class account {
     @Column(unique = true)
     private String username;
     private String password;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, targetEntity = KwetterUser.class)
+    @JsonIgnore
     private KwetterUser user;
 
     public account() {
         this.user = new KwetterUser();
     }
-
     
     public account(String password, String username) {
         this.user = new KwetterUser();

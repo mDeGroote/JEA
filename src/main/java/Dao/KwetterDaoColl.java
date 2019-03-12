@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import sun.net.www.content.audio.x_aiff;
 
@@ -18,7 +19,7 @@ import sun.net.www.content.audio.x_aiff;
  *
  * Collection implementation of KwetterDao interface
  */
-@Stateless @Default
+@ApplicationScoped @Default
 public class KwetterDaoColl implements KwetterDao{
     private List<Kwetter> kwetters = new ArrayList<>();
 

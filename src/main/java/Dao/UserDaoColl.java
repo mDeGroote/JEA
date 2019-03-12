@@ -11,10 +11,11 @@ import com.sun.org.apache.regexp.internal.REUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 
 
-@Stateless @Default
+@ApplicationScoped @Default
 public class UserDaoColl implements UserDao{
     private List<KwetterUser> users = new ArrayList<>();
 
