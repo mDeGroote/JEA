@@ -1,4 +1,5 @@
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Serializers\DateSerializer.java
+C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Beans\LoginBean.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\KwetterDaoColl.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\UserDaoImpl.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Models\Kwetter.java
@@ -7,6 +8,7 @@ C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\com\myco
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Models\KwetterUser.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\KwetterDaoImpl.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\UserDao.java
+C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Serializers\CustomListDeserializer.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Dao\UserDaoColl.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Serializers\CustomListSerializer.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\services\KwetterUserService.java
@@ -18,3 +20,4 @@ C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\org\netb
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Resources\KwetterResource.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\services\KwetterService.java
 C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Serializers\DateDeserializer.java
+C:\Users\maria\Documents\NetBeansProjects\Kwetter\Kwetter\src\main\java\Beans\ModeratorBean.java

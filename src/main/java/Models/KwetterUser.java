@@ -15,6 +15,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.CollectionDeserializer;
+import com.fasterxml.jackson.databind.ser.impl.IteratorSerializer;
+import com.fasterxml.jackson.databind.ser.std.ArraySerializerBase;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,23 +52,26 @@ public class KwetterUser implements Serializable {
     private List<KwetterUser> following = new ArrayList();
     private String bio;
     private String website;
-    private String locatie;
+    private String location;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Kwetter> kwetters = new ArrayList();
+    private Roles role;
 
     public KwetterUser() {
+        this.role = Roles.User;
     }
 
-    public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String locatie, List<Kwetter> kwetters) {
+    public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String location, List<Kwetter> kwetters, Roles role) {
         this.name = name;
         this.profilePicture = profilePicture;
         this.followers = followers;
         this.following = following;
         this.bio = bio;
         this.website = website;
-        this.locatie = locatie;
+        this.location = location;
         this.kwetters = kwetters;
+        this.role = role;
     }
 
     public int getId() {
@@ -96,9 +102,15 @@ public class KwetterUser implements Serializable {
         return website;
     }
 
-    public String getLocatie() {
-        return locatie;
+    public String getLocation() {
+        return location;
     }
+
+    public Roles getRole() {
+        return role;
+    }
+    
+    
 
     public void setId(int id) {
         this.id = id;
@@ -116,10 +128,15 @@ public class KwetterUser implements Serializable {
         this.website = website;
     }
 
-    public void setLocatie(String locatie) {
-        this.locatie = locatie;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+    
+    
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }

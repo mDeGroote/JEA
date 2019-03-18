@@ -37,7 +37,7 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
     private int id;
     private String title;
     private String content;
-    @ManyToOne(targetEntity = KwetterUser.class)
+    @ManyToOne
     private KwetterUser user;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)

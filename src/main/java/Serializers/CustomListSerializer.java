@@ -7,6 +7,7 @@ package Serializers;
 
 import Models.KwetterUser;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class CustomListSerializer extends StdSerializer<List<KwetterUser>>{
         for(KwetterUser u : t) {
             ids.add(u.getId());
         }
-        jg.writeObject(ids);
+        new ObjectMapper().writeValueAsString(ids);
     }
     
 }

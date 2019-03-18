@@ -7,4 +7,20 @@
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/webapi/*</url-pattern>
     </servlet-mapping>
+    <security-constraint>
+        <display-name>Constraint1</display-name>
+        <auth-constraint>
+            <description/>
+            <role-name>user</role-name>
+            <role-name>moderator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <description>Logged in user</description>
+        <role-name>user</role-name>
+    </security-role>
+    <security-role>
+        <description>Logged in moderator</description>
+        <role-name>moderator</role-name>
+    </security-role>
 </web-app>

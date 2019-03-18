@@ -40,8 +40,8 @@ public class KwetterDaoImpl implements KwetterDao{
     }
 
     @Override
-    public void Delete(Kwetter k) {
-        em.remove(k);
+    public void Delete(int id) {
+        em.remove(em.find(Kwetter.class, id));
     }
 
     @Override
@@ -52,6 +52,13 @@ public class KwetterDaoImpl implements KwetterDao{
     @Override
     public List<Kwetter> Search(String s) {
         return em.createNativeQuery("SELECT * FROM Kwetter WHERE title LIKE '%" + s + "%' or content LIKE '%" + s + "%';", Kwetter.class).getResultList();
+    }
+
+    @Override
+    public List<Kwetter> getKwettersFromUser(KwetterUser u) {
+        Query query = em.createQuery("SELECT k FROM Kwetter k WHERE k.user = ?1");
+        query.setParameter(1, u);
+        return query.getResultList();
     }
     
 }

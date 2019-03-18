@@ -55,9 +55,8 @@ public class KwetterResource {
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
-        Kwetter kwetter = kwetterService.kwetterByID(id);
-        if(kwetter != null) {
-            kwetterService.Delete(kwetter);
+        if(id != 0) {
+            kwetterService.Delete(id);
             return Response.ok().build();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
@@ -84,8 +83,28 @@ public class KwetterResource {
     public Response search(@PathParam("searchTerm") String s) {
         List<Kwetter> kwetters = kwetterService.search(s);
         if(kwetters != null) {
-            return Response.ok(kwetters).build();
+            try {
+                return Response.ok(new ObjectMapper().writeValueAsString(kwetters)).build();
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(KwetterResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return Response.status(Response.Status.NO_CONTENT).build();
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getKwettersFromUser(KwetterUser u) {
+        List<Kwetter> kwetters = kwetterService.getKwettersFromUser(u);
+        if(kwetters != null) {
+            try {
+                return Response.ok(new ObjectMapper().writeValueAsString(kwetters)).build();
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(KwetterResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+    
 }

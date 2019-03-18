@@ -16,7 +16,8 @@ import java.util.List;
  */
 public interface KwetterDao {
     public Kwetter Create(Kwetter k);
-    public void Delete(Kwetter k);
+    public void Delete(int id);
     public Kwetter KwetterByID(int id);
     public List<Kwetter> Search(String s);
+    public List<Kwetter> getKwettersFromUser(KwetterUser u);
 }

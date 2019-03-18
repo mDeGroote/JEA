@@ -30,8 +30,12 @@ public class KwetterDaoColl implements KwetterDao{
     }
 
     @Override
-    public void Delete(Kwetter k) {
-        kwetters.remove(k);
+    public void Delete(int id) {
+        for(Kwetter k : kwetters) {
+            if(k.getId() == id) {
+                kwetters.remove(k);
+            }
+        }
     }
 
     @Override
@@ -51,6 +55,11 @@ public class KwetterDaoColl implements KwetterDao{
             searchResult.add(t);
         });
         return searchResult;
+    }
+
+    @Override
+    public List<Kwetter> getKwettersFromUser(KwetterUser u) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

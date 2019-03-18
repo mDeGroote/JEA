@@ -31,8 +31,8 @@ public class KwetterService{
         return kwetterDao.Create(k);
     }
     
-    public void Delete(Kwetter k) {
-        kwetterDao.Delete(k);
+    public void Delete(int id) {
+        kwetterDao.Delete(id);
     }
     
     public Kwetter kwetterByID(int id) {
@@ -41,5 +41,9 @@ public class KwetterService{
     
     public List<Kwetter> search(String s) {
         return kwetterDao.Search(s);
+    }
+    
+    public List<Kwetter> getKwettersFromUser(KwetterUser u) {
+        return kwetterDao.getKwettersFromUser(u);
     }
 }

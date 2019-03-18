@@ -53,7 +53,6 @@ public class KwetterUserService {
         return userDao.UserByID(id);
     }
     
-        
     public void registerUser(account account) {
         userDao.registerUser(account);
     }

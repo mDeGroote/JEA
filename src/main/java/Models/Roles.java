@@ -7,6 +7,6 @@ package Models;
 
 
 public enum Roles {
-    user,
-    moderator
+    User,
+    Moderator
 }

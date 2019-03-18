@@ -10,6 +10,7 @@ import Models.account;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -67,7 +68,12 @@ public class UserDaoImpl implements UserDao{
         Query query = this.em.createQuery("SELECT a.user FROM account a WHERE a.username = ?1 AND a.password = ?2");
         query.setParameter(1, username);
         query.setParameter(2, password);
-        return (KwetterUser)query.getSingleResult();
+        try {
+            return (KwetterUser)query.getSingleResult();
+        }
+        catch(NoResultException ex) {
+            return null;
+        }
     }
 
     public void setEm(EntityManager em) {
