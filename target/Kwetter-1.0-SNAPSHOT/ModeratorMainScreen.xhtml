@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Moderator Main screen</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    </h:head>
+    <f:metadata>
+        <f:viewParam name="moderatorID" value="#{ModeratorBean.moderatorID}" required="true"/>
+        <f:event type="preRenderComponent" listener="#{ModeratorBean.LoadModerator()}"/>
+    </f:metadata>
+    <h:body>
+         <h:outputLabel value="#{KwetterUser.name}"></h:outputLabel>
+        <h:form>
+            <h:dataTable value="#{ModeratorBean.getUsers()}" var="KwetterUser" class="table">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputLabel value="#{KwetterUser.name}"></h:outputLabel>
+                </h:column>  
+                <h:column>
+                    <f:facet name="header">Role</f:facet>
+                    <h:outputLabel value="#{KwetterUser.role}"></h:outputLabel>
+                </h:column>  
+                <h:column>
+                    <h:commandButton value="Get Kwetters" class = "btn btn-primary" action="#{ModeratorBean.getKwettersFromUser(KwetterUser)}"></h:commandButton>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form>
+            <h:dataTable id="Kwetters" value="#{ModeratorBean.selectedKwetters}" var="Kwetter" class="table">  
+                <h:column>
+                    <f:facet name="header">Title</f:facet>
+                    <h:outputLabel value="#{Kwetter.title}"></h:outputLabel>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Content</f:facet>
+                    <h:outputLabel value="#{Kwetter.content}"></h:outputLabel>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Delete" class = "btn btn-primary" action="#{ModeratorBean.deleteKwetter(Kwetter)}"></h:commandButton>
+                </h:column>
+            </h:dataTable> 
+        </h:form>
+    </h:body>
+</html>

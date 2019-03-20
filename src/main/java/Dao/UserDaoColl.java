@@ -17,7 +17,7 @@ import javax.enterprise.inject.Default;
 
 @ApplicationScoped @Default
 public class UserDaoColl implements UserDao{
-    private List<KwetterUser> users = new ArrayList<>();
+    private List<KwetterUser> users = new ArrayList();
 
     @Override
     public KwetterUser Create(KwetterUser u) {

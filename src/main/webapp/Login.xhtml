@@ -15,9 +15,9 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h:form class="well">
-        Username: <h:inputText type="text" value="#{LoginBean.username}" class="form-group" required="true"/> <br/>
-        Password: <h:inputSecret type="text" value="#{LoginBean.password}" class="form-group" required="true"/> <br/>
-        <h:commandButton action="#{LoginBean.Login()}" value="Login"></h:commandButton> 
+            Username: <h:inputText value="#{LoginBean.username}" class="form-group" required="true"/> <br/>
+            Password: <h:inputSecret value="#{LoginBean.password}" class="form-group" required="true"/> <br/>
+            <h:commandButton action="#{LoginBean.Login()}" value="Login"></h:commandButton> 
         </h:form>
     </h:body>
 </html>

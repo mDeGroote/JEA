@@ -5,33 +5,18 @@
  */
 package Models;
 
-import Serializers.CustomListDeserializer;
-import Serializers.CustomListSerializer;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.CollectionDeserializer;
-import com.fasterxml.jackson.databind.ser.impl.IteratorSerializer;
-import com.fasterxml.jackson.databind.ser.std.ArraySerializerBase;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -45,10 +30,10 @@ public class KwetterUser implements Serializable {
     private int id;
     private String name;
     private byte[] profilePicture;
-    @ManyToMany  
+    @ManyToMany(mappedBy = "following")
     private List<KwetterUser> followers = new ArrayList();
     @ManyToMany
-    @JsonIgnore
+    //@JsonIgnore
     private List<KwetterUser> following = new ArrayList();
     private String bio;
     private String website;
@@ -56,10 +41,11 @@ public class KwetterUser implements Serializable {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Kwetter> kwetters = new ArrayList();
-    private Roles role;
+    @Enumerated(EnumType.STRING)
+    private Roles userRole;
 
     public KwetterUser() {
-        this.role = Roles.User;
+        this.userRole = Roles.User;
     }
 
     public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String location, List<Kwetter> kwetters, Roles role) {
@@ -71,7 +57,7 @@ public class KwetterUser implements Serializable {
         this.website = website;
         this.location = location;
         this.kwetters = kwetters;
-        this.role = role;
+        this.userRole = role;
     }
 
     public int getId() {
@@ -107,7 +93,7 @@ public class KwetterUser implements Serializable {
     }
 
     public Roles getRole() {
-        return role;
+        return userRole;
     }
     
     
@@ -133,7 +119,7 @@ public class KwetterUser implements Serializable {
     }
 
     public void setRole(Roles role) {
-        this.role = role;
+        this.userRole = role;
     }
     
     

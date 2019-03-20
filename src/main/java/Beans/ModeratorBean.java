@@ -13,6 +13,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.enterprise.SecurityContext;
 import services.KwetterService;
 import services.KwetterUserService;
 
@@ -26,9 +27,12 @@ public class ModeratorBean implements Serializable{
     @Inject
     private KwetterUserService kwetterUserService;
     
+    @Inject
+    private SecurityContext securityContext;
+    
     private int moderatorID;
     private KwetterUser moderator;
-    private List<Kwetter> selectedKwetters = new ArrayList<>();
+    private List<Kwetter> selectedKwetters = new ArrayList();
 
     public KwetterUser getModerator() {
         return moderator;
@@ -68,10 +72,10 @@ public class ModeratorBean implements Serializable{
     
     public void deleteKwetter(Kwetter k) {
         this.kwetterService.Delete(k.getId());
-        for(Kwetter kwetter : selectedKwetters) {
-            if(kwetter.getId() == k.getId()) {
-                selectedKwetters.remove(kwetter);
-            }
-        }
+        this.getKwettersFromUser(k.getUser());
+    }
+    
+    public String checkSession() {
+        return securityContext.getCallerPrincipal().getName();
     }
 }

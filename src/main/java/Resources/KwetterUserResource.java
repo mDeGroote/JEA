@@ -145,11 +145,11 @@ public class KwetterUserResource {
     @Path("follow/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response follow(KwetterUser u, @PathParam("id") int id) {
-        KwetterUser user = kwetterUserService.follow(u, kwetterUserService.userByID(id));
-        if (user != null) {
+    public Response follow(@PathParam("id") int userID, KwetterUser u) {
+        u = kwetterUserService.follow(u, kwetterUserService.userByID(userID));
+        if (u != null) {
             try {
-                return Response.ok(new ObjectMapper().writeValueAsString(user)).build();
+                return Response.ok(new ObjectMapper().writeValueAsString(u)).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -161,7 +161,7 @@ public class KwetterUserResource {
     @Path("unfollow/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response unfollow(KwetterUser u, @PathParam("id") int id) {
+    public Response unfollow(@PathParam("id") int id, KwetterUser u) {
         KwetterUser user = kwetterUserService.unfollow(u, kwetterUserService.userByID(id));
         if (user != null) {
             try {

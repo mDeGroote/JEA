@@ -9,19 +9,36 @@ import Models.KwetterUser;
 import Models.Roles;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
+import javax.faces.annotation.FacesConfig;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
+import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import services.KwetterUserService;
 
 @Named("LoginBean")
 @RequestScoped
+@FacesConfig
 public class LoginBean implements Serializable{
+    
     @Inject
     KwetterUserService service;
     
-    private String username;
+    @Inject
+    private SecurityContext securityContext;
+    
+    @Inject
+    private FacesContext facesContext;
+    
+    private String username = "username";
     private String password;     
     private KwetterUser kwetteruser;
 
@@ -44,9 +61,10 @@ public class LoginBean implements Serializable{
     public String Login() {
         KwetterUser u = service.login(username, password);
         if(u != null && u.getRole() == Roles.Moderator) {
-            this.kwetteruser = u;
-            return "ModeratorMainScreen.xhtml?";
+            return "ModeratorMainScreen.xhtml";
         }
         return "Login.xhtml";
     }
+
+    
 }
