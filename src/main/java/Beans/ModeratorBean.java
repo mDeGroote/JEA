@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.SecurityContext;
@@ -75,7 +76,8 @@ public class ModeratorBean implements Serializable{
         this.getKwettersFromUser(k.getUser());
     }
     
-    public String checkSession() {
-        return securityContext.getCallerPrincipal().getName();
+    public String Logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/Login.xhtml";
     }
 }

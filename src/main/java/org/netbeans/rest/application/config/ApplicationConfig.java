@@ -6,12 +6,16 @@
 package org.netbeans.rest.application.config;
 
 import java.util.Set;
+import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
+import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.ws.rs.core.Application;
 
-/**
- *
- * @author mariac
- */
+@CustomFormAuthenticationMechanismDefinition(
+        loginToContinue = @LoginToContinue(
+                loginPage = "/Login.xhtml",
+                useForwardToLogin = false
+            )
+)
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
