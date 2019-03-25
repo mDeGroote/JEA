@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
         resources.add(Resources.KwetterResource.class);
         resources.add(Resources.KwetterUserResource.class);
         resources.add(com.mycompany.kwetter.DukesAgeResource.class);
+        resources.add(org.netbeans.rest.application.config.CORSfilter.class);
     }
     
 }
