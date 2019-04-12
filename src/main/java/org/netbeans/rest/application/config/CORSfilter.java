@@ -21,11 +21,12 @@ public class CORSfilter implements ContainerResponseFilter{
           crc1.getHeaders().add(
             "Access-Control-Allow-Credentials", "true");
           crc1.getHeaders().add(
-           "Access-Control-Allow-Headers",
-           "origin, content-type, accept, authorization");
+           "Access-Control-Allow-Headers", 
+                  "origin, content-type, accept, authorization");
           crc1.getHeaders().add(
             "Access-Control-Allow-Methods", 
             "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+          crc1.getHeaders().add("Access-Control-Expose-Headers", "Authorization");
     }
     
 }

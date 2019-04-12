@@ -5,11 +5,12 @@
  */
 package Resources;
 
+import Beans.AuthorisationBean;
+import Interfaces.JWTTokenNeeded;
 import Models.KwetterUser;
 import Models.account;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.URI;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,10 +24,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.eclipse.persistence.annotations.DeleteAll;
 import services.KwetterUserService;
 
 /**
@@ -38,7 +38,10 @@ import services.KwetterUserService;
 public class KwetterUserResource {
 
     @Inject
-    KwetterUserService kwetterUserService;
+    private KwetterUserService kwetterUserService;
+    
+    @Inject
+    private AuthorisationBean authorisationBean;
 
     public KwetterUserResource() {
     }
@@ -91,6 +94,7 @@ public class KwetterUserResource {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
+    @JWTTokenNeeded
     public Response getKwetterUser(@PathParam("id") int id) {
         KwetterUser kwetterUser = kwetterUserService.userByID(id);
         if (kwetterUser != null) {
@@ -133,7 +137,8 @@ public class KwetterUserResource {
         KwetterUser user = kwetterUserService.login(account.getUsername(), account.getPassword());
         if (user != null) {
             try {
-                return Response.ok(new ObjectMapper().writeValueAsString(user)).build();
+                String token = authorisationBean.generateToken(account.getUsername());
+                return Response.status(Response.Status.OK).entity(new ObjectMapper().writeValueAsString(user)).header(AUTHORIZATION, "Bearer " + token).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }

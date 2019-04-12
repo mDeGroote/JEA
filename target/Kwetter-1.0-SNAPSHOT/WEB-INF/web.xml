@@ -21,7 +21,7 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>Login.xhtml</welcome-file>
+        <welcome-file>ModeratorMainScreen.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <display-name>ModeratorMainScreen</display-name>

@@ -33,19 +33,17 @@ public class KwetterUser implements Serializable {
     @ManyToMany(mappedBy = "following")
     private List<KwetterUser> followers = new ArrayList();
     @ManyToMany
-    //@JsonIgnore
     private List<KwetterUser> following = new ArrayList();
     private String bio;
     private String website;
     private String location;
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private List<Kwetter> kwetters = new ArrayList();
     @Enumerated(EnumType.STRING)
     private Roles userRole;
 
     public KwetterUser() {
-        this.userRole = Roles.User;
+        
     }
 
     public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String location, List<Kwetter> kwetters, Roles role) {
@@ -94,10 +92,8 @@ public class KwetterUser implements Serializable {
 
     public Roles getRole() {
         return userRole;
-    }
+    }    
     
-    
-
     public void setId(int id) {
         this.id = id;
     } 
@@ -141,6 +137,14 @@ public class KwetterUser implements Serializable {
 
     public void setKwetters(List<Kwetter> kwetters) {
         this.kwetters = kwetters;
+    }
+
+    public Roles getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Roles userRole) {
+        this.userRole = userRole;
     }
     
     public void addKwetter(Kwetter k) {

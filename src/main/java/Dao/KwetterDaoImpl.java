@@ -7,6 +7,7 @@ package Dao;
 
 import Models.Kwetter;
 import Models.KwetterUser;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -35,6 +36,7 @@ public class KwetterDaoImpl implements KwetterDao{
     @Override
     public Kwetter Create(Kwetter k) {
         k.setUser(em.merge(k.getUser()));
+        k.setKwetterDate(LocalDate.now());
         em.persist(k);
         return k;
     }

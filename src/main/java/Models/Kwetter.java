@@ -5,22 +5,14 @@
  */
 package Models;
 
-import Serializers.DateDeserializer;
-import Serializers.DateSerializer;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
-import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -44,7 +36,7 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
     private LocalDate kwetterDate;
 
     public Kwetter() {
-        this.kwetterDate = LocalDate.now();
+        
     }
 
     public Kwetter(String title, String content, KwetterUser user) {

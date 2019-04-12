@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(Filters.JWTTokenFilter.class);
         resources.add(Resources.KwetterResource.class);
         resources.add(Resources.KwetterUserResource.class);
         resources.add(com.mycompany.kwetter.DukesAgeResource.class);

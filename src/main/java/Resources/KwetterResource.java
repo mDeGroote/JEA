@@ -5,6 +5,7 @@
  */
 package Resources;
 
+import Interfaces.JWTTokenNeeded;
 import Models.Kwetter;
 import Models.KwetterUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,7 +33,7 @@ import services.KwetterService;
  * Resource for the kwetters
  */
 @Stateless
-@Path("kwetters")
+@Path("Kwetters")
 public class KwetterResource {
     @Inject
     KwetterService kwetterService;
@@ -80,6 +81,7 @@ public class KwetterResource {
     @GET
     @Path("/search/{searchTerm}")
     @Produces(MediaType.APPLICATION_JSON)
+    @JWTTokenNeeded
     public Response search(@PathParam("searchTerm") String s) {
         List<Kwetter> kwetters = kwetterService.search(s);
         if(kwetters != null) {
