@@ -5,6 +5,7 @@ package dao;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import DTO.KwetterJsonDTO;
 import Dao.KwetterDaoImpl;
 import Models.Kwetter;
 import Models.KwetterUser;
@@ -45,7 +46,7 @@ public class KwetterDaoTest {
     @Test
     public void testCreate() throws Exception {
         KwetterUser kwetterUser = new KwetterUser();
-        Kwetter kwetter = new Kwetter("title", "content", kwetterUser);
+        Kwetter kwetter = new Kwetter("content", kwetterUser);
         et.begin();
         kwetter = kwetterDao.Create(kwetter);
         em.persist(kwetterUser);
@@ -62,7 +63,8 @@ public class KwetterDaoTest {
         Kwetter kwetter = new Kwetter();
         kwetter.setUser(kwetterUser);
         et.begin();
-        kwetter = kwetterDao.Create(kwetter);
+        em.persist(kwetterUser);
+        kwetter = kwetterDao.Create(new KwetterJsonDTO(kwetter.getContent(), kwetterUser.getId()));
         et.commit();
         em.remove(kwetter);
         assertNull(em.find(Kwetter.class, kwetter.getId()));
@@ -85,7 +87,7 @@ public class KwetterDaoTest {
      */
     @Test
     public void testSearch() throws Exception {
-        Kwetter kwetter = new Kwetter("title", "stukje tekst om te kijken of de search functie wel het woord goed kan vinden", null);
+        Kwetter kwetter = new Kwetter("stukje tekst om te kijken of de search functie wel het woord goed kan vinden", null);
         et.begin();
         em.persist(kwetter);
         et.commit();

@@ -5,6 +5,7 @@
  */
 package services;
 
+import DTO.KwetterJsonDTO;
 import Dao.JPA;
 import Dao.KwetterDao;
 import Models.Kwetter;
@@ -27,7 +28,7 @@ public class KwetterService{
     @Inject @JPA
     private KwetterDao kwetterDao;
     
-    public Kwetter Create(Kwetter k) {
+    public Kwetter Create(KwetterJsonDTO k) {
         return kwetterDao.Create(k);
     }
     

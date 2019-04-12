@@ -5,6 +5,7 @@
  */
 package Dao;
 
+import DTO.KwetterJsonDTO;
 import Models.Kwetter;
 import Models.KwetterUser;
 import java.time.LocalDate;
@@ -34,11 +35,11 @@ public class KwetterDaoImpl implements KwetterDao{
     }
       
     @Override
-    public Kwetter Create(Kwetter k) {
-        k.setUser(em.merge(k.getUser()));
-        k.setKwetterDate(LocalDate.now());
-        em.persist(k);
-        return k;
+    public Kwetter Create(KwetterJsonDTO k) {
+        Kwetter kwetter = new Kwetter(k.getContent(), em.find(KwetterUser.class, k.getUserId()));
+        kwetter.setKwetterDate(LocalDate.now());
+        em.persist(kwetter);
+        return kwetter;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class KwetterDaoImpl implements KwetterDao{
 
     @Override
     public List<Kwetter> Search(String s) {
-        return em.createNativeQuery("SELECT * FROM Kwetter WHERE title LIKE '%" + s + "%' or content LIKE '%" + s + "%';", Kwetter.class).getResultList();
+        return em.createNativeQuery("SELECT * FROM Kwetter WHERE content LIKE '%" + s + "%';", Kwetter.class).getResultList();
     }
 
     @Override
@@ -61,6 +62,13 @@ public class KwetterDaoImpl implements KwetterDao{
         Query query = em.createQuery("SELECT k FROM Kwetter k WHERE k.user = ?1");
         query.setParameter(1, u);
         return query.getResultList();
+    }
+
+    @Override
+    public Kwetter Create(Kwetter k) {
+        k.setKwetterDate(LocalDate.now());
+        em.persist(k);
+        return k;
     }
     
 }

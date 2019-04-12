@@ -5,6 +5,7 @@
  */
 package Resources;
 
+import DTO.KwetterJsonDTO;
 import Interfaces.JWTTokenNeeded;
 import Models.Kwetter;
 import Models.KwetterUser;
@@ -44,10 +45,10 @@ public class KwetterResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(Kwetter k) {
-        k = kwetterService.Create(k);
+    public Response create(KwetterJsonDTO k) {
+        Kwetter kwetter = kwetterService.Create(k);
         try {
-            return Response.status(Response.Status.CREATED).entity(new ObjectMapper().writeValueAsString(k)).build();
+            return Response.status(Response.Status.CREATED).entity(new ObjectMapper().writeValueAsString(kwetter)).build();
         } catch (JsonProcessingException ex) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

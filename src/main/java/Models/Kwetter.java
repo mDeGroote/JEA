@@ -27,7 +27,6 @@ import javax.persistence.ManyToOne;
 public class Kwetter implements Serializable, Comparable<Kwetter>{
     @Id @GeneratedValue
     private int id;
-    private String title;
     private String content;
     @ManyToOne
     private KwetterUser user;
@@ -39,8 +38,7 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
         
     }
 
-    public Kwetter(String title, String content, KwetterUser user) {
-        this.title = title;
+    public Kwetter(String content, KwetterUser user) {
         this.content = content;
         this.user = user;
         this.kwetterDate = LocalDate.now();
@@ -48,10 +46,6 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
 
     public int getId() {
         return id;
-    }
-    
-    public String getTitle() {
-        return title;
     }
 
     public String getContent() {
@@ -65,10 +59,6 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
     public void setId(int id) {
         this.id = id;
     }   
-    
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public void setContent(String content) {
         this.content = content;

@@ -22,7 +22,9 @@ public class account {
     @Id @GeneratedValue
     private int id;
     @Column(unique = true)
+    @JsonIgnore
     private String username;
+    @JsonIgnore
     private String password;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, targetEntity = KwetterUser.class)
     @JsonIgnore
@@ -34,14 +36,12 @@ public class account {
     
     public account(String password, String username) {
         this.user = new KwetterUser();
-        this.password = password;
-        this.username = username;
     }
 
     public KwetterUser getKwetterUser() {
         return user;
     }
-
+ 
     public String getPassword() {
         return password;
     }

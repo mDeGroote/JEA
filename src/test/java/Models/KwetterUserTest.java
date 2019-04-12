@@ -20,8 +20,8 @@ public class KwetterUserTest {
     public void testTimeline() {
         KwetterUser kwetterUser = new KwetterUser();
         KwetterUser following = new KwetterUser();
-        Kwetter kwetter = new Kwetter("kwetterUser", "content", kwetterUser);
-        Kwetter followingKwetter = new Kwetter("following", "following", following);
+        Kwetter kwetter = new Kwetter("content", kwetterUser);
+        Kwetter followingKwetter = new Kwetter("following", following);
         kwetterUser.addKwetter(kwetter);
         following.addKwetter(followingKwetter);
         kwetterUser.follow(following);
