@@ -5,6 +5,7 @@
  */
 package Resources;
 
+import Authentication.TokenGenerator;
 import Beans.AuthorisationBean;
 import Interfaces.JWTTokenNeeded;
 import Models.KwetterUser;
@@ -41,7 +42,7 @@ public class KwetterUserResource {
     private KwetterUserService kwetterUserService;
     
     @Inject
-    private AuthorisationBean authorisationBean;
+    private TokenGenerator tokenGenerator;
 
     public KwetterUserResource() {
     }
@@ -108,24 +109,9 @@ public class KwetterUserResource {
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteAccount(account account) {
-        kwetterUserService.DeleteAccount(account);
-        return Response.ok().build();
-    }
-
-    @DELETE
     @Path("{id}")
     public Response deleteUser(@PathParam("id") int id) {
         kwetterUserService.DeleteUser(kwetterUserService.userByID(id));
-        return Response.ok().build();
-    }
-
-    @POST
-    @Path("Register")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response registerUser(account account) {
-        kwetterUserService.registerUser(account);
         return Response.ok().build();
     }
 
@@ -137,7 +123,7 @@ public class KwetterUserResource {
         KwetterUser user = kwetterUserService.login(account.getUsername(), account.getPassword());
         if (user != null) {
             try {
-                String token = authorisationBean.generateToken(account.getUsername());
+                String token = tokenGenerator.createToken(account.getUsername());
                 return Response.status(Response.Status.OK).entity(new ObjectMapper().writeValueAsString(user)).header(AUTHORIZATION, "Bearer " + token).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);

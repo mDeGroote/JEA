@@ -10,14 +10,8 @@ import Dao.UserDao;
 import Models.KwetterUser;
 import Models.account;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Default;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 
 /**
  *
@@ -37,10 +31,6 @@ public class KwetterUserService {
         return userDao.Update(u);
     }
     
-    public void DeleteAccount(account a) {
-        userDao.DeleteAccount(a);
-    }
-    
     public void DeleteUser(KwetterUser u) {
         userDao.DeleteUser(u);
     }
@@ -51,10 +41,6 @@ public class KwetterUserService {
     
     public KwetterUser userByID(int id) {
         return userDao.UserByID(id);
-    }
-    
-    public void registerUser(account account) {
-        userDao.registerUser(account);
     }
     
     public KwetterUser login(String username, String password) {

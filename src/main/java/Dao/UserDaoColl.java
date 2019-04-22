@@ -29,11 +29,6 @@ public class UserDaoColl implements UserDao{
     public void DeleteUser(KwetterUser u) {
         users.remove(u);
     }
-    
-    @Override
-    public void DeleteAccount(account a) {
-        users.remove(a.getKwetterUser());
-    }
 
     @Override
     public KwetterUser UserByID(int id) {
@@ -48,11 +43,6 @@ public class UserDaoColl implements UserDao{
     @Override
     public List<KwetterUser> AllUsers() {
         return users;
-    }
-
-    @Override
-    public void registerUser(account account) {
-        users.add(account.getKwetterUser());
     }
 
     @Override

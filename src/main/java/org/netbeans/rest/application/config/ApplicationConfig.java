@@ -8,6 +8,8 @@ package org.netbeans.rest.application.config;
 import java.util.Set;
 import javax.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
 import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
+import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
+import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import javax.ws.rs.core.Application;
 
 @CustomFormAuthenticationMechanismDefinition(
@@ -34,6 +36,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(Filters.JWTTokenFilter.class);
+        resources.add(Resources.AuthorisationResource.class);
         resources.add(Resources.KwetterResource.class);
         resources.add(Resources.KwetterUserResource.class);
         resources.add(com.mycompany.kwetter.DukesAgeResource.class);

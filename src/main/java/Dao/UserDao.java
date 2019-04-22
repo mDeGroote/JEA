@@ -16,9 +16,7 @@ public interface UserDao {
     public KwetterUser Create(KwetterUser u);
     public KwetterUser Update(KwetterUser u);
     public void DeleteUser(KwetterUser u);
-    public void DeleteAccount(account account);
     public KwetterUser UserByID(int id);
     public List<KwetterUser> AllUsers();
-    public void registerUser(account account);
     public KwetterUser Login(String username, String password);
 }

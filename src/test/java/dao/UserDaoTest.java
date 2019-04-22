@@ -75,18 +75,6 @@ public class UserDaoTest {
         et.commit();
         assertNull(em.find(KwetterUser.class, u.getId()));
     }
-    
-    @Test
-    public void testDeleteAccount() {
-        account account = new account("deleteAccount", "deleteAccount");
-        et.begin();
-        userDao.registerUser(account);
-        et.commit();
-        et.begin();
-        userDao.DeleteAccount(account);
-        et.commit();
-        assertNull(em.find(account.class, account.getId()));
-    }
 
     /**
      * Test of UserByID method, of class UserDao.
@@ -113,20 +101,12 @@ public class UserDaoTest {
     }
     
     @Test
-    public void testRegister() {
-        et.begin();
-        userDao.registerUser(new account("RegisterTest", "RegisterTest"));
-        et.commit();
-        assertNotNull(userDao.Login("RegisterTest", "RegisterTest"));
-    }
-    
-    @Test
     public void testLogin() {
-        account account = new account("LoginTest", "LoginTest");
+        KwetterUser user = new KwetterUser("LoginTest", "LoginTest", "LoginTest");
         et.begin();
-        em.persist(account);
+        em.persist(user);
         et.commit();
-        KwetterUser user = userDao.Login("LoginTest", "LoginTest");
-        assertNotNull(user.getId());
+        KwetterUser login = userDao.Login("LoginTest", "LoginTest");
+        assertNotNull(login.getId());
     }
 }

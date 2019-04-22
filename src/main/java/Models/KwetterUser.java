@@ -27,7 +27,9 @@ import javax.persistence.OneToMany;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class KwetterUser implements Serializable {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private int id;
     private String name;
     private byte[] profilePicture;
@@ -42,10 +44,23 @@ public class KwetterUser implements Serializable {
     private List<Kwetter> kwetters = new ArrayList();
     @Enumerated(EnumType.STRING)
     private Roles userRole;
+    @Column(unique = true)
+    @JsonIgnore
+    private String username;
+    @JsonIgnore
+    private String password;
 
     public KwetterUser() {
-        
+
     }
+
+    public KwetterUser(String name, String username, String password) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
+    
+    
 
     public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String location, List<Kwetter> kwetters, Roles role) {
         this.name = name;
@@ -62,7 +77,7 @@ public class KwetterUser implements Serializable {
     public int getId() {
         return id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -93,12 +108,12 @@ public class KwetterUser implements Serializable {
 
     public Roles getRole() {
         return userRole;
-    }    
-    
+    }
+
     public void setId(int id) {
         this.id = id;
-    } 
-    
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -118,8 +133,7 @@ public class KwetterUser implements Serializable {
     public void setRole(Roles role) {
         this.userRole = role;
     }
-    
-    
+
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
@@ -147,37 +161,53 @@ public class KwetterUser implements Serializable {
     public void setUserRole(Roles userRole) {
         this.userRole = userRole;
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void addKwetter(Kwetter k) {
         this.kwetters.add(k);
     }
-    
+
     public void removeKwetter(Kwetter k) {
         this.kwetters.remove(k);
     }
-    
+
     public void follow(KwetterUser u) {
         this.following.add(u);
         u.addFollower(this);
     }
-    
+
     public void unfollow(KwetterUser u) {
         this.following.remove(u);
         u.removeFollower(this);
     }
-    
+
     public void addFollower(KwetterUser u) {
         this.followers.add(u);
     }
-    
+
     public void removeFollower(KwetterUser u) {
         this.followers.add(u);
     }
-    
+
     public List<Kwetter> timeline() {
         List<Kwetter> timeline = this.kwetters;
         timeline.sort(null);
-        for(KwetterUser u : this.following) {
+        for (KwetterUser u : this.following) {
             timeline.addAll(u.getKwetters());
             timeline.sort(null);
         }

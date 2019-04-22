@@ -17,29 +17,19 @@ import javax.persistence.OneToOne;
  *
  * account class to store username and password of KwetterUser
  */
-@Entity
 public class account {
-    @Id @GeneratedValue
-    private int id;
     @Column(unique = true)
     @JsonIgnore
     private String username;
     @JsonIgnore
     private String password;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, targetEntity = KwetterUser.class)
-    @JsonIgnore
-    private KwetterUser user;
 
     public account() {
-        this.user = new KwetterUser();
     }
     
     public account(String password, String username) {
-        this.user = new KwetterUser();
-    }
-
-    public KwetterUser getKwetterUser() {
-        return user;
+        this.username = username;
+        this.password = password;
     }
  
     public String getPassword() {
@@ -56,18 +46,6 @@ public class account {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public KwetterUser getUser() {
-        return user;
-    }
-
-    public void setUser(KwetterUser user) {
-        this.user = user;
-    }
-
-    public int getId() {
-        return id;
     }
     
     

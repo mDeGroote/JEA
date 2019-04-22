@@ -40,11 +40,7 @@ and open the template in the editor.
             </h:dataTable>
         </h:form>
         <h:form>
-            <h:dataTable id="Kwetters" value="#{ModeratorBean.selectedKwetters}" var="Kwetter" class="table">  
-                <h:column>
-                    <f:facet name="header">Title</f:facet>
-                    <h:outputLabel value="#{Kwetter.title}"></h:outputLabel>
-                </h:column>
+            <h:dataTable id="Kwetters" value="#{ModeratorBean.selectedKwetters}" var="Kwetter" class="table">
                 <h:column>
                     <f:facet name="header">Content</f:facet>
                     <h:outputLabel value="#{Kwetter.content}"></h:outputLabel>

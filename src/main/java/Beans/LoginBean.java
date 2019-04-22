@@ -34,7 +34,7 @@ import services.KwetterUserService;
 @Named("LoginBean")
 @RequestScoped
 @FacesConfig
-public class LoginBean implements Serializable, IdentityStore {
+public class LoginBean implements Serializable{
 
     @Inject
     KwetterUserService service;
@@ -94,15 +94,6 @@ public class LoginBean implements Serializable, IdentityStore {
         return (HttpServletResponse) facesContext
                 .getExternalContext()
                 .getResponse();
-    }
-
-    @Override
-    public CredentialValidationResult validate(Credential credential) {
-        KwetterUser u = service.login(username, password);
-        if (u != null && u.getRole() == Roles.Moderator) {
-            return new CredentialValidationResult(u.getName(), new HashSet<>(Arrays.asList("Moderator")));
-        }
-        return CredentialValidationResult.NOT_VALIDATED_RESULT;
     }
 
 }
