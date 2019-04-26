@@ -5,6 +5,7 @@
  */
 package services;
 
+import DTO.KwetterUserDTO;
 import Dao.JPA;
 import Dao.UserDao;
 import Models.KwetterUser;
@@ -27,7 +28,13 @@ public class KwetterUserService {
         return userDao.Create(u);
     }
     
-    public KwetterUser Update(KwetterUser u) {
+    public KwetterUser Update(KwetterUserDTO user) {
+        KwetterUser u = this.userByID(user.getId());
+        u.setName(user.getName());
+        u.setProfilePicture(user.getProfilePicture());
+        u.setBio(user.getBio());
+        u.setLocation(user.getLocation());
+        u.setWebsite(user.getWebsite());
         return userDao.Update(u);
     }
     

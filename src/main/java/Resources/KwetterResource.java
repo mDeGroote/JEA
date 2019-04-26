@@ -45,6 +45,7 @@ public class KwetterResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @JWTTokenNeeded
     public Response create(KwetterJsonDTO k) {
         Kwetter kwetter = kwetterService.Create(k);
         try {

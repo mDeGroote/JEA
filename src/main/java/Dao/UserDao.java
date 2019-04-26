@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Dao;
+import DTO.KwetterUserDTO;
 import Models.KwetterUser;
 import Models.account;
 import java.util.List;

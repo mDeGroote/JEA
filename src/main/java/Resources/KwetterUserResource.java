@@ -7,6 +7,7 @@ package Resources;
 
 import Authentication.TokenGenerator;
 import Beans.AuthorisationBean;
+import DTO.KwetterUserDTO;
 import Interfaces.JWTTokenNeeded;
 import Models.KwetterUser;
 import Models.account;
@@ -65,13 +66,13 @@ public class KwetterUserResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(KwetterUser u) {
+    public Response update(KwetterUserDTO u) {
         if (u == null || u.getId() == 0) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-        u = kwetterUserService.Update(u);
+        KwetterUser user = kwetterUserService.Update(u);
         try {
-            return Response.ok(new ObjectMapper().writeValueAsString(u)).build();
+            return Response.ok(new ObjectMapper().writeValueAsString(user)).build();
         } catch (JsonProcessingException ex) {
             Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
         }

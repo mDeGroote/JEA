@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="dao.UserDaoTest" time="0.316" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="dao.UserDaoTest" time="0.359" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\bin"/>
@@ -63,10 +63,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="dao.UserDaoTest" name="testAllUsers" time="0.162"/>
+  <testcase classname="dao.UserDaoTest" name="testAllUsers" time="0.187"/>
   <testcase classname="dao.UserDaoTest" name="testLogin" time="0.015"/>
-  <testcase classname="dao.UserDaoTest" name="testUserByID" time="0.015"/>
-  <testcase classname="dao.UserDaoTest" name="testDeleteUser" time="0"/>
-  <testcase classname="dao.UserDaoTest" name="testCreate" time="0.007"/>
-  <testcase classname="dao.UserDaoTest" name="testUpdate" time="0"/>
+  <testcase classname="dao.UserDaoTest" name="testUserByID" time="0"/>
+  <testcase classname="dao.UserDaoTest" name="testDeleteUser" time="0.016"/>
+  <testcase classname="dao.UserDaoTest" name="testCreate" time="0.015"/>
+  <testcase classname="dao.UserDaoTest" name="testUpdate" time="0.015"/>
 </testsuite>

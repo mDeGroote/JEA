@@ -59,8 +59,15 @@ public class KwetterUser implements Serializable {
         this.username = username;
         this.password = password;
     }
-    
-    
+
+    public KwetterUser(int id, String name, byte[] profilePicture, String bio, String website, String location) {
+        this.id = id;
+        this.name = name;
+        this.profilePicture = profilePicture;
+        this.bio = bio;
+        this.website = website;
+        this.location = location;
+    }
 
     public KwetterUser(String name, byte[] profilePicture, List<KwetterUser> followers, List<KwetterUser> following, String bio, String website, String location, List<Kwetter> kwetters, Roles role) {
         this.name = name;
