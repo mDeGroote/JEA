@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.security.enterprise.CallerPrincipal;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
@@ -32,7 +33,7 @@ public class IdentityStore implements javax.security.enterprise.identitystore.Id
             query.setParameter(2, usernamePasswordCredential.getPasswordAsString());
             try {
                 KwetterUser u  = (KwetterUser)query.getSingleResult();
-                return new CredentialValidationResult(u.getName(), new HashSet<>(Arrays.asList(u.getUserRole().toString())));
+                return new CredentialValidationResult(new CallerPrincipal(u.getName()), new HashSet<>(Arrays.asList(u.getUserRole().toString())));
             } catch (NoResultException ex) {
                 return CredentialValidationResult.NOT_VALIDATED_RESULT;
             }

@@ -6,7 +6,12 @@
 package Resources;
 
 import Authentication.TokenGenerator;
+import Dao.JPA;
+import Dao.UserDao;
+import Models.KwetterUser;
 import Models.account;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -25,6 +30,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import services.KwetterUserService;
 
 @Path("Authorization")
 public class AuthorisationResource {
@@ -36,14 +42,22 @@ public class AuthorisationResource {
     
     @Inject
     private TokenGenerator tokenGenerator;
+    
+    @Inject
+    private KwetterUserService userService;
         
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response Login(account account) {
         CredentialValidationResult result = identityStoreHandler.validate(new UsernamePasswordCredential(account.getUsername(), account.getPassword()));
         if(result.getStatus() == CredentialValidationResult.Status.VALID) {
-            String token = tokenGenerator.createToken(account.getUsername());
-            return Response.status(Response.Status.OK).header("Authorization", token).build();
+            KwetterUser user = userService.login(account.getUsername(), account.getPassword());
+            String token = tokenGenerator.createToken(user);
+            try {
+                return Response.status(Response.Status.OK).entity(new ObjectMapper().writeValueAsString(user)).header("Authorization", token).build();
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(AuthorisationResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }

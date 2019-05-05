@@ -5,6 +5,7 @@
  */
 package Authentication;
 
+import Models.KwetterUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
@@ -18,10 +19,11 @@ public class TokenGenerator {
 
     private String secretKey = "simpleKey";
 
-    public String createToken(String username) {
+    public String createToken(KwetterUser user) {
         Key key = new SecretKeySpec("simpleKey".getBytes(), 0, "simpleKey".getBytes().length, "DES");
         String jwtToken = Jwts.builder()
-                .setSubject(username)
+                .setSubject(user.getUsername())
+                .claim("userId", user.getId())
                 //.setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
                 //.setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))

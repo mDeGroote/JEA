@@ -121,10 +121,11 @@ public class KwetterUserResource {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(account account) {
+        
         KwetterUser user = kwetterUserService.login(account.getUsername(), account.getPassword());
         if (user != null) {
             try {
-                String token = tokenGenerator.createToken(account.getUsername());
+                String token = tokenGenerator.createToken(user);
                 return Response.status(Response.Status.OK).entity(new ObjectMapper().writeValueAsString(user)).header(AUTHORIZATION, "Bearer " + token).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
