@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,13 +25,13 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import services.KwetterService;
 import services.KwetterUserService;
 
-@javax.websocket.server.ServerEndpoint(value = "/KwetterWS",
-        configurator = KwetterConfigurator.class)
+@javax.websocket.server.ServerEndpoint(value = "/KwetterWS/{id}")
 public class KwetterWebsocketEndpoint {
-    private final Set<Session> SESSIONS = Collections.synchronizedSet(new HashSet<Session>());
+    private final static Map<Integer, Session> SESSIONS = Collections.synchronizedMap(new HashMap());
     
     @Inject
     private KwetterService kwetterService;
@@ -39,13 +40,13 @@ public class KwetterWebsocketEndpoint {
     private KwetterUserService kwetterUserService;
     
     @OnOpen
-    public void open(Session session, EndpointConfig config) {
-        this.SESSIONS.add(session);    
+    public void open(Session session, @PathParam("id") int id) {
+        this.SESSIONS.put(id, session);    
     }
     
     @OnClose
-    public void close(Session session, EndpointConfig config) {
-        this.SESSIONS.remove(session);
+    public void close(Session session, @PathParam("id") int id) {
+        this.SESSIONS.remove(id, session);
     }
     
     @OnError
@@ -60,6 +61,12 @@ public class KwetterWebsocketEndpoint {
             Kwetter k = kwetterService.Create(kwetter);
             String kweet = new ObjectMapper().writeValueAsString(k);
             session.getAsyncRemote().sendText(kweet);
+            for(KwetterUser follower: k.getUser().getFollowers()) {
+                try {
+                    this.SESSIONS.get(follower.getId()).getAsyncRemote().sendText(kweet);
+                }
+                catch(NullPointerException ex) {}
+            }
         } catch (IOException ex) {
             Logger.getLogger(KwetterWebsocketEndpoint.class.getName()).log(Level.SEVERE, null, ex);
         }

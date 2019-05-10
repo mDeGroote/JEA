@@ -29,6 +29,7 @@ import javax.ws.rs.Produces;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import services.KwetterUserService;
 
 /**
@@ -99,6 +100,9 @@ public class KwetterUserResource {
     @JWTTokenNeeded
     public Response getKwetterUser(@PathParam("id") int id) {
         KwetterUser kwetterUser = kwetterUserService.userByID(id);
+        UriBuilder builder = UriBuilder.fromResource(KwetterUserResource.class);
+        builder.host("http://localhost:8080/Kwetter");
+        System.out.println(builder);
         if (kwetterUser != null) {
             try {
                 return Response.ok(new ObjectMapper().writeValueAsString(kwetterUser)).build();
