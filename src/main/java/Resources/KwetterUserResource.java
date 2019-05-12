@@ -26,10 +26,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import services.KwetterUserService;
 
 /**
@@ -42,9 +45,12 @@ public class KwetterUserResource {
 
     @Inject
     private KwetterUserService kwetterUserService;
-    
+
     @Inject
     private TokenGenerator tokenGenerator;
+
+    @Context
+    UriInfo uriInfo;
 
     public KwetterUserResource() {
     }
@@ -56,7 +62,8 @@ public class KwetterUserResource {
         u = kwetterUserService.Create(u);
         if (u != null) {
             try {
-                return Response.status(Response.Status.CREATED).entity(new ObjectMapper().writeValueAsString(u)).build();
+                u.setSelf(Link.fromUri(uriInfo.getBaseUri() + "/users/" + u.getId()).rel("self").type("GET").build());
+                return Response.status(Response.Status.CREATED).entity(new ObjectMapper().writeValueAsString(u)).links(Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("delete").type("DELETE").build(), Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("update").type("UPDATE").build()).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -72,8 +79,9 @@ public class KwetterUserResource {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
         KwetterUser user = kwetterUserService.Update(u);
+        user.setSelf(Link.fromUri(uriInfo.getBaseUri() + "/users/" + user.getId()).rel("self").type("GET").build());
         try {
-            return Response.ok(new ObjectMapper().writeValueAsString(user)).build();
+            return Response.ok(new ObjectMapper().writeValueAsString(user)).links(Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("delete").type("DELETE").build(), Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("update").type("UPDATE").build()).build();
         } catch (JsonProcessingException ex) {
             Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,6 +92,9 @@ public class KwetterUserResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() {
         List<KwetterUser> users = kwetterUserService.getAll();
+        for(KwetterUser u : users) {
+            u.setSelf(Link.fromUri(uriInfo.getBaseUri() + "/users/" + u.getId()).rel("self").type("GET").build());
+        }
         if (users != null) {
             try {
                 return Response.ok(new ObjectMapper().writeValueAsString(users)).build();
@@ -100,12 +111,10 @@ public class KwetterUserResource {
     @JWTTokenNeeded
     public Response getKwetterUser(@PathParam("id") int id) {
         KwetterUser kwetterUser = kwetterUserService.userByID(id);
-        UriBuilder builder = UriBuilder.fromResource(KwetterUserResource.class);
-        builder.host("http://localhost:8080/Kwetter");
-        System.out.println(builder);
         if (kwetterUser != null) {
             try {
-                return Response.ok(new ObjectMapper().writeValueAsString(kwetterUser)).build();
+                kwetterUser.setSelf(Link.fromUri(uriInfo.getAbsolutePath()).rel("self").type("GET").build());
+                return Response.ok(new ObjectMapper().writeValueAsString(kwetterUser)).links(Link.fromUri(uriInfo.getAbsolutePath()).rel("delete").type("DELETE").build(), Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("update").type("UPDATE").build()).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -125,12 +134,13 @@ public class KwetterUserResource {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(account account) {
-        
+
         KwetterUser user = kwetterUserService.login(account.getUsername(), account.getPassword());
         if (user != null) {
             try {
+                user.setSelf(Link.fromUri(uriInfo.getBaseUri() + "/users/" + user.getId()).rel("self").type("GET").build());
                 String token = tokenGenerator.createToken(user);
-                return Response.status(Response.Status.OK).entity(new ObjectMapper().writeValueAsString(user)).header(AUTHORIZATION, "Bearer " + token).build();
+                return Response.status(Response.Status.OK).entity(new ObjectMapper().writeValueAsString(user)).header(AUTHORIZATION, "Bearer " + token).links(Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("delete").type("DELETE").build(), Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("update").type("UPDATE").build()).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -146,14 +156,15 @@ public class KwetterUserResource {
         u = kwetterUserService.follow(u, kwetterUserService.userByID(userID));
         if (u != null) {
             try {
-                return Response.ok(new ObjectMapper().writeValueAsString(u)).build();
+                u.setSelf(Link.fromUri(uriInfo.getBaseUri() + "/users/" + u.getId()).rel("self").type("GET").build());
+                return Response.ok(new ObjectMapper().writeValueAsString(u)).links(Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("delete").type("DELETE").build(), Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("update").type("UPDATE").build()).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return Response.status(Response.Status.NO_CONTENT).build();
     }
-    
+
     @PUT
     @Path("unfollow/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
@@ -162,7 +173,8 @@ public class KwetterUserResource {
         KwetterUser user = kwetterUserService.unfollow(u, kwetterUserService.userByID(id));
         if (user != null) {
             try {
-                return Response.ok(new ObjectMapper().writeValueAsString(user)).build();
+                user.setSelf(Link.fromUri(uriInfo.getBaseUri() + "/users/" + user.getId()).rel("self").type("GET").build());
+                return Response.ok(new ObjectMapper().writeValueAsString(user)).links(Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("delete").type("DELETE").build(), Link.fromUri(uriInfo.getBaseUri() + "/users/").rel("update").type("UPDATE").build()).build();
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(KwetterUserResource.class.getName()).log(Level.SEVERE, null, ex);
             }

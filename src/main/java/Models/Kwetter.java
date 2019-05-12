@@ -17,6 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.ws.rs.core.Link;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate kwetterDate;
+    private @Transient Link self;
 
     public Kwetter() {
         
@@ -76,6 +79,14 @@ public class Kwetter implements Serializable, Comparable<Kwetter>{
         return kwetterDate;
     }
 
+    public Link getSelf() {
+        return self;
+    }
+
+    public void setSelf(Link self) {
+        this.self = self;
+    }
+    
     @Override
     public int compareTo(Kwetter o) {
         return this.kwetterDate.compareTo(o.getKwetterDate());

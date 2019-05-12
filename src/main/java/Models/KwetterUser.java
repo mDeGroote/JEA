@@ -19,6 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import javax.ws.rs.core.Link;
 
 /**
  *
@@ -49,6 +51,7 @@ public class KwetterUser implements Serializable {
     private String username;
     @JsonIgnore
     private String password;
+    private @Transient Link self;
 
     public KwetterUser() {
 
@@ -185,6 +188,16 @@ public class KwetterUser implements Serializable {
         this.username = username;
     }
 
+    public Link getSelf() {
+        return self;
+    }
+
+    public void setSelf(Link self) {
+        this.self = self;
+    }
+    
+    
+    
     public void addKwetter(Kwetter k) {
         this.kwetters.add(k);
     }
